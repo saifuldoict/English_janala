@@ -21,7 +21,7 @@ const loadLevelWord = (id) => {
       removeActive();
       const clickBtn = document.getElementById(`level-${id}`);
       clickBtn.classList.add("active");
-      displayLevelWord(data.data)
+      displayLevelWord(data.data);
     }); 
 }
 
@@ -65,8 +65,23 @@ const displayLevelWord = (words) => {
 
 }
 
-
-
+const loadWorldDetail = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/word/${id}`;
+  const res = await fetch(url);
+  const details = await res.json();
+  displayWordDetail(details.data);
+  
+}
+const displayWordDetail = (word) => {
+  
+  const detailsContainer = document.getElementById("details_container");
+  detailsContainer.innerHTML = `
+    <h3 class="text-lg font-bold">${word.word ? word.word : "শব্দ পাওয়া যায়নি"}</h3>
+    <p class="py-4">Meaning: ${word.meaning ? word.meaning : "মানে পাওয়া যায়নি"}</p>
+    <p class="py-4">Pronunciation: ${word.pronunciation ? word.pronunciation : "Pronuncation পাওয়া যায়নি"}</p>
+    <p class="py-4">Example: ${word.example ? word.example : "Example পাওয়া যায়নি"}</p>
+  `;
+}
 const displayLesson = (lessons) => {
   const level_container = document.getElementById("level_container");
     level_container.innerHTML = "";
